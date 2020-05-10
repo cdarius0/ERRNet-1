@@ -44,9 +44,7 @@ def paired_data_transforms(img_1, img_2, unaligned_transforms=False):
         j = random.randint(0, w - tw)
         return i, j, th, tw
     
-    # target_size = int(random.randint(224+10, 448) / 2.) * 2
-    target_size = int(random.randint(224, 448) / 2.) * 2
-    # target_size = int(random.randint(256, 480) / 2.) * 2
+    target_size = int(random.randint(300, 300) / 2.) * 2
     ow, oh = img_1.size
     if ow >= oh:
         img_1 = __scale_height(img_1, target_size)
@@ -59,7 +57,7 @@ def paired_data_transforms(img_1, img_2, unaligned_transforms=False):
         img_1 = F.hflip(img_1)
         img_2 = F.hflip(img_2)
 
-    i, j, h, w = get_params(img_1, (224,224))
+    i, j, h, w = get_params(img_1, (300, 300))
     # i, j, h, w = get_params(img_1, (256,256))
     img_1 = F.crop(img_1, i, j, h, w)
     
@@ -90,7 +88,8 @@ class DataLoader(torch.utils.data.DataLoader):
 
 
 class CEILDataset(BaseDataset):
-    def __init__(self, datadir, fns=None, size=None, enable_transforms=True, low_sigma=2, high_sigma=5, low_gamma=1.3, high_gamma=1.3):
+    def __init__(self, datadir, fns=None, size=None, enable_transforms=True, low_sigma=2, high_sigma=5, low_gamma=1.3,
+                 high_gamma=1.3):
         super(CEILDataset, self).__init__()
         self.size = size
         self.datadir = datadir
@@ -101,7 +100,8 @@ class CEILDataset(BaseDataset):
         if size is not None:
             self.paths = self.paths[:size]
 
-        self.syn_model = ReflectionSythesis_1(kernel_sizes=[11], low_sigma=low_sigma, high_sigma=high_sigma, low_gamma=low_gamma, high_gamma=high_gamma)
+        self.syn_model = ReflectionSythesis_1(kernel_sizes=[11], low_sigma=low_sigma, high_sigma=high_sigma,
+                                              low_gamma=low_gamma, high_gamma=high_gamma)
         self.reset(shuffle=False)
 
     def reset(self, shuffle=True):

@@ -9,11 +9,15 @@ class BaseOptions(Base):
     def initialize(self):
         Base.initialize(self)
         # experiment specifics
-        self.parser.add_argument('--inet', type=str, default='errnet', help='chooses which architecture to use for inet.')
-        self.parser.add_argument('--icnn_path', type=str, default=None, help='icnn checkpoint to use.')
-        self.parser.add_argument('--init_type', type=str, default='edsr', help='network initialization [normal|xavier|kaiming|orthogonal|uniform]')
+        self.parser.add_argument('--inet', type=str, default='errnet',
+                                 help='chooses which architecture to use for inet.')
+        self.parser.add_argument('--icnn_path', type=str, default=None,
+                                 help='icnn checkpoint to use.')
+        self.parser.add_argument('--init_type', type=str, default='edsr',
+                                 help='network initialization [normal|xavier|kaiming|orthogonal|uniform]')
         # for network
-        self.parser.add_argument('--hyper', action='store_true', help='if true, augment input with vgg hypercolumn feature')
+        self.parser.add_argument('--hyper', action='store_true',
+                                 help='if true, augment input with vgg hypercolumn feature')
         
         self.initialized = True
 
